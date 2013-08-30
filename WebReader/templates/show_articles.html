@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+  {#<ul class=feeds>
+  <h2>Status of the Feeds:</h2>
+  {% for feed in feeds %}
+    <li><a href="{{ '/feed/'+feed.name }}"><h3>{{ feed.name }}</h3></a> Number of articles: {{ feed.count }}, unread: {{ feed.unread }}
+  {% else %}
+    <li><em>Add some feeds, Silly!</em>
+  {% endfor %}
+  </ul>#}
+  <a href="{{ '/add' }}"><h2>Want to add a feed?</h2></a>
+  <script type="text/javascript">
+    function showStuff(id) {
+      if(document.getElementById(id).style.display == "block")
+        document.getElementById(id).style.display = "none";
+      else document.getElementById(id).style.display = "block";
+    }
+  </script>
+  <form action="{{ url_for('update_all') }}" method=post class=update-feed>
+    <input type=submit value=Update>
+  </form>
+  <h2> What's new in the world: </h2>
+  <ul class=entries>
+  {% for entry in entries %}
+    {% if entry.read %}
+      <li class=read><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% else %}
+      <li class=unread><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% endif %}
+    <a href="#" onclick='showStuff("{{ entry.guid }}"); return false;'>...</a>
+    <span id="{{ entry.guid }}" style="display: none;"> <p> {{ entry.timeS|safe }} </p><p> {{ entry.summary|safe }} </p></span>
+  {% else %}
+    <li><em>Unbelievable.  No articles here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

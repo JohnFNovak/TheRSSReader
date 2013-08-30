@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+  <a href="{{ '/'+count-1 }}">Previous</a>
+  <ul class=entries>
+  {% for entry in entries %}
+    {% if entry.read %}
+      <li class=read><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% else %}
+      <li class=unread><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% endif %}
+    <p> {{ entry.timeS|safe }} <p> {{ entry.summary|safe }} <p>
+  {% else %}
+    <li><em>Unbelievable.  No articles here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

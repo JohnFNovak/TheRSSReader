@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block body %}
+  {#<ul class=feeds>
+  <h2>Status of the Feeds:</h2>
+  {% for feed in feeds %}
+    <li><a href="{{ '/feed/'+feed.name }}"><h3>{{ feed.name }}</h3></a> Number of articles: {{ feed.count }}, unread: {{ feed.unread }}
+  {% else %}
+    <li><em>Add some feeds, Silly!</em>
+  {% endfor %}
+  </ul>#}
+  <h2>Want to add a feed?</h2>
+  <form action="{{ url_for('add_feed') }}" method=post class=add-feed>
+    <dl>
+      <dt>Title:
+      <dd><input type=text size=30 name=title>
+      <dt>URL:
+      <dd><input type=text size=60 name=url>
+      <dd><input type=submit value=Add>
+    </dl>
+  </form>
+  <h2> What's new in the world: </h2>
+  <ul class=entries>
+  {% for entry in entries %}
+    {% if entry.read %}
+      <li class=read><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% else %}
+      <li class=unread><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% endif %}
+    <p> {{ entry.timeS|safe }} <p> {{ entry.summary|safe }} <p>
+  {% else %}
+    <li><em>Unbelievable.  No articles here so far</em>
+  {% endfor %}
+  </ul>
+  <h2> The latest for each: </h2>
+  <ul class=entries>
+  {% for entry in entries %}
+    {% if entry.read %}
+      <li class=read><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% else %}
+      <li class=unread><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% endif %}
+    <p> {{ entry.timeS|safe }} <p> {{ entry.summary|safe }} <p>
+  {% else %}
+    <li><em>Unbelievable.  No articles here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

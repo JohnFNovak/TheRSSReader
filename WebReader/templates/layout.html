@@ -1,0 +1,16 @@
+<!doctype html>
+<title>TheReader</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <a href="{{ '/' }}"><h1>TheReader</h1></a>
+  <div class=metanav>
+  </div>
+  {% for message in get_flashed_messages() %}
+  <div class=flash>{{ message }}</div>
+  {% endfor %}
+  <a href="{{ '/articles/full' }}">All Articles</a> <a href="{{ '/feeds/' }}">Feeds</a>
+  {% block body %}{% endblock %}
+</div>
+<div id="sidebar">
+  {% block sidebar %}{% endblock %}
+</div>

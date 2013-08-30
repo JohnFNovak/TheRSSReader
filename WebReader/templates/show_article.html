@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+  <p> <a href="{{ '/article/'+relative.gprev }}">Previous</a> <a href="{{ '/article/'+relative.gnext }}">Next</a>
+  <p> <a href="{{ '/article/'+relative.fprev }}">Previous in feed</a> <a href="{{ '/article/'+relative.fnext }}">Next in feed</a>
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2><a href="{{ '/feed/'+entry.feed }}">{{ entry.feed|safe }}</a>: <a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {{ entry.timeS|safe }} <p> <a href="{{ entry.url }}">{{ entry.url }}</a>  <p> {{ entry.fullsummary|safe }} <p> {{ entry.fulltext|safe }} <p>
+  {% else %}
+    <li><em>Unbelievable.  No articles here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

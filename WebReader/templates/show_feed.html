@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1><a href="{{ '/feed/'+feed.name }}">{{ feed.name|safe }}</a></h1><a href="{{ feed.url }}">RSS</a>
+    <form action="{{ '/feed/'+feed.name+'/update' }}" method=post class=update-feed>
+      <dl>
+        <dd><input type=submit value=Update>
+      </dl>
+    </form>
+  <ul class=entries>
+  {% for entry in entries %}
+    {% if entry.read %}
+      <li class=read><h2><a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% else %}
+      <li class=unread><h2><a href="{{ '/article/'+entry.guid }}">{{ entry.title|safe }}</a></h2>
+    {% endif %}
+    <p> {{ entry.timeS|safe }} <p> {{ entry.summary|safe }} <p>
+  {% else %}
+    <li><em>Unbelievable.  No articles here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
